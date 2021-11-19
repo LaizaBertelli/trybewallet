@@ -1,21 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-
-import saveEmail from '../actions/index'
+import PropTypes from 'prop-types';
+import saveEmail from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      isEmailValid: false,
-      isPasswordValid: false,
       isButtonDisabled: true,
       email: '',
       password: '',
       changePath: false,
-    }
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.validateInputs = this.validateInputs.bind(this);
@@ -24,16 +22,17 @@ class Login extends React.Component {
 
   validateInputs() {
     const { email, password } = this.state;
+    const MAX_LENGTH = 6;
 
-    const isPasswordValid = (password) => (password.length >= 6);
-    let isEmailValid = (email) => {
-      const hasAt = email.split('').find((char) => '@');
-      const hasDotCom = email.endsWith('.com');
+    const isPasswordValid = (passW) => (passW.length >= MAX_LENGTH);
+    const isEmailValid = (emailValue) => {
+      const hasAt = emailValue.split('').find(() => '@');
+      const hasDotCom = emailValue.endsWith('.com');
 
       return hasAt && hasDotCom;
     };
 
-    if(isPasswordValid(password) && isEmailValid(email)) {
+    if (isPasswordValid(password) && isEmailValid(email)) {
       this.setState({ isButtonDisabled: false });
     } else {
       this.setState({ isButtonDisabled: true });
@@ -42,28 +41,47 @@ class Login extends React.Component {
 
   handleChange(event) {
     const { name, value } = event.target;
-    this.setState({ [name]: value}, () => this.validateInputs());
+    this.setState({ [name]: value }, () => this.validateInputs());
   }
 
   redirect() {
     this.setState({ changePath: true });
   }
+
   render() {
-    const { isButtonDisabled, changePath } = this.state;
+    const { isButtonDisabled, changePath, email } = this.state;
     const { saveDispatch } = this.props;
     return (
       <main>
         <form>
-          <input data-testid="email-input" type="email" name="email" placeholder="Enter your email..." onChange={ this.handleChange } />
-          <input data-testid="password-input" type="password" name="password" placeholder="Enter your password..." onChange={ this.handleChange } />
+          <input
+            data-testid="email-input"
+            type="email"
+            name="email"
+            placeholder="Enter your email..."
+            onChange={ this.handleChange }
+          />
+          <input
+            data-testid="password-input"
+            type="password"
+            name="password"
+            placeholder="Enter your password..."
+            onChange={ this.handleChange }
+          />
 
-          <button type="button" disabled={ isButtonDisabled } onClick={ () => {
-            saveDispatch(this.state.email);
-            this.redirect();
-          } }>Entrar</button>
+          <button
+            type="button"
+            disabled={ isButtonDisabled }
+            onClick={ () => {
+              saveDispatch(email);
+              this.redirect();
+            } }
+          >
+            Entrar
+          </button>
         </form>
         {
-          changePath && <Redirect to="/carteira"  />
+          changePath && <Redirect to="/carteira" />
         }
       </main>
     );
@@ -74,5 +92,9 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   saveDispatch: (state) => dispatch(saveEmail(state)),
 });
+
+Login.propTypes = {
+  saveDispatch: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);

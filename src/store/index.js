@@ -1,4 +1,4 @@
-// Feito com base nos códigos de exemplo do Course 
+// Feito com base nos códigos de exemplo do Course
 import { createStore } from 'redux';
 import rootreducer from '../reducers';
 
