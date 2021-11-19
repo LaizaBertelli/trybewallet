@@ -58,7 +58,7 @@ class Login extends React.Component {
           <input data-testid="password-input" type="password" name="password" placeholder="Enter your password..." onChange={ this.handleChange } />
 
           <button type="button" disabled={ isButtonDisabled } onClick={ () => {
-            saveDispatch(this.state);
+            saveDispatch(this.state.email);
             this.redirect();
           } }>Entrar</button>
         </form>
