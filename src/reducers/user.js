@@ -5,16 +5,13 @@ const INITIAL_STATE = [
       password: '',
     }
 ]
-function userInfos(state = INITIAL_STATE, action) {
+function user(state = INITIAL_STATE, action) {
   switch(action.type) {
     case 'SAVE_EMAIL':
-      return [
-        ...state,
-        { email: action.value },
-      ];
+      return { email: action.value };
     default:
       return state;
   }
 }
 
-export default userInfos;
+export default user;
