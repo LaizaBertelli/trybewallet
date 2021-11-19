@@ -14,10 +14,12 @@ class Login extends React.Component {
       isButtonDisabled: true,
       email: '',
       password: '',
+      changePath: false,
     }
 
     this.handleChange = this.handleChange.bind(this);
     this.validateInputs = this.validateInputs.bind(this);
+    this.redirect = this.redirect.bind(this);
   }
 
   validateInputs() {
@@ -42,8 +44,12 @@ class Login extends React.Component {
     const { name, value } = event.target;
     this.setState({ [name]: value}, () => this.validateInputs());
   }
+
+  redirect() {
+    this.setState({ changePath: true });
+  }
   render() {
-    const { isButtonDisabled } = this.state;
+    const { isButtonDisabled, changePath } = this.state;
     const { saveDispatch } = this.props;
     return (
       <main>
@@ -51,8 +57,14 @@ class Login extends React.Component {
           <input data-testid="email-input" type="email" name="email" placeholder="Enter your email..." onChange={ this.handleChange } />
           <input data-testid="password-input" type="password" name="password" placeholder="Enter your password..." onChange={ this.handleChange } />
 
-          <button type="button" disabled={ isButtonDisabled } onClick={ () => saveDispatch(this.state) }>Entrar</button>
+          <button type="button" disabled={ isButtonDisabled } onClick={ () => {
+            saveDispatch(this.state);
+            this.redirect();
+          } }>Entrar</button>
         </form>
+        {
+          changePath && <Redirect to="/carteira"  />
+        }
       </main>
     );
   }
