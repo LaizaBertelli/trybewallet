@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+
+import saveEmail from '../actions/index'
 
 class Login extends React.Component {
   constructor() {
@@ -9,52 +12,55 @@ class Login extends React.Component {
       isEmailValid: false,
       isPasswordValid: false,
       isButtonDisabled: true,
+      email: '',
+      password: '',
     }
 
     this.handleChange = this.handleChange.bind(this);
+    this.validateInputs = this.validateInputs.bind(this);
+  }
+
+  validateInputs() {
+    const { email, password } = this.state;
+
+    const isPasswordValid = (password) => (password.length >= 6);
+    let isEmailValid = (email) => {
+      const hasAt = email.split('').find((char) => '@');
+      const hasDotCom = email.endsWith('.com');
+
+      return hasAt && hasDotCom;
+    };
+
+    if(isPasswordValid(password) && isEmailValid(email)) {
+      this.setState({ isButtonDisabled: false });
+    } else {
+      this.setState({ isButtonDisabled: true });
+    }
   }
 
   handleChange(event) {
-    const target = event.target;
-    if(target.name === 'password') {
-      if(target.value.length >= 5) {
-        this.setState({
-          isPasswordValid: true,
-        });
-      }
-    } else {
-      const hasAt = target.value.split('').find((char) => '@');
-      const hasDotCom = target.value.endsWith('.com');
-      if(hasAt && hasDotCom) {
-        this.setState({
-          isEmailValid: true,
-        });
-      }
-    }
-    const { isEmailValid, isPasswordValid } = this.state;
-    if(isEmailValid && isPasswordValid ) {
-      this.setState({
-        isButtonDisabled: false,
-      });
-    } else {
-      this.setState({
-        isButtonDisabled: true,
-      });
-    }
+    const { name, value } = event.target;
+    this.setState({ [name]: value}, () => this.validateInputs());
   }
   render() {
     const { isButtonDisabled } = this.state;
+    const { saveDispatch } = this.props;
     return (
       <main>
         <form>
           <input data-testid="email-input" type="email" name="email" placeholder="Enter your email..." onChange={ this.handleChange } />
           <input data-testid="password-input" type="password" name="password" placeholder="Enter your password..." onChange={ this.handleChange } />
 
-          <button type="button" disabled={ isButtonDisabled }>Entrar</button>
+          <button type="button" disabled={ isButtonDisabled } onClick={ () => saveDispatch(this.state) }>Entrar</button>
         </form>
       </main>
     );
   }
 }
 
-export default Login;
+// função feita com base nos códigos de exemplo do course
+const mapDispatchToProps = (dispatch) => ({
+  saveDispatch: (state) => dispatch(saveEmail(state)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
