@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 import saveEmail from '../actions/index';
+import '../styles/login.css';
 
 class Login extends React.Component {
   constructor() {
@@ -52,24 +53,33 @@ class Login extends React.Component {
     const { isButtonDisabled, changePath, email } = this.state;
     const { saveDispatch } = this.props;
     return (
-      <main>
-        <form>
-          <input
-            data-testid="email-input"
-            type="email"
-            name="email"
-            placeholder="Enter your email..."
-            onChange={ this.handleChange }
-          />
-          <input
-            data-testid="password-input"
-            type="password"
-            name="password"
-            placeholder="Enter your password..."
-            onChange={ this.handleChange }
-          />
+      <main className="login-forms">
+        <div className="form">
+          <label htmlFor="email">
+            Email:
+            <br />
+            <input
+              data-testid="email-input"
+              type="email"
+              name="email"
+              placeholder="Enter your email..."
+              onChange={ this.handleChange }
+            />
+          </label>
+          <label htmlFor="password">
+            Senha:
+            <br />
+            <input
+              data-testid="password-input"
+              type="password"
+              name="password"
+              placeholder="Enter your password..."
+              onChange={ this.handleChange }
+            />
+          </label>
 
           <button
+            className="send-button"
             type="button"
             disabled={ isButtonDisabled }
             onClick={ () => {
@@ -79,7 +89,7 @@ class Login extends React.Component {
           >
             Entrar
           </button>
-        </form>
+        </div>
         {
           changePath && <Redirect to="/carteira" />
         }
