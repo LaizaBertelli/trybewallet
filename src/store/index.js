@@ -1,9 +1,10 @@
 // Feito com base nos códigos de exemplo do Course 
-import { combineReducers, createStore } from 'redux';
-import listReducer from '../reducers';
+import { createStore } from 'redux';
+import rootreducer from '../reducers';
 
-const rootreducer = combineReducers({ listReducer });
-
-const store = createStore(rootreducer);
+const store = createStore(
+  rootreducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
 
 export default store;
