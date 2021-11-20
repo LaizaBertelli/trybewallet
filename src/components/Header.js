@@ -22,7 +22,7 @@ const mapStateToProps = (state) => ({
 });
 
 Header.propTypes = {
-  userInfo: PropTypes.objectOf(PropTypes.string).isRequired,
+  userInfo: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
 };
 
 export default connect(mapStateToProps, null)(Header);
