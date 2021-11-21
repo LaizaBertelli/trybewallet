@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Input from './Input';
 import Currency from './Currency';
-import { saveWallet } from '../actions/index';
+import { saveWallet, fetchCurrency } from '../actions/index';
 
 const METHODS = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const TAGS = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -14,14 +14,24 @@ class Form extends React.Component {
     this.state = {
       expenses: [],
       expense: 0,
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       description: '',
+      exchangeRates: '',
+      id: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.addExpense = this.addExpense.bind(this);
+    this.recoverCurrency = this.recoverCurrency.bind(this);
+    this.sendDispatch = this.sendDispatch.bind(this);
+  }
+
+  async recoverCurrency() {
+    const { getCurrency } = this.props;
+    const { currencies } = await getCurrency();
+    this.setState({ exchangeRates: currencies }, () => this.addExpense());
   }
 
   handleChange({ target }) {
@@ -30,8 +40,17 @@ class Form extends React.Component {
   }
 
   addExpense() {
-    const { expenses, expense, currency, method, tag, description } = this.state;
-    let id = 0;
+    const {
+      expenses,
+      expense,
+      currency,
+      method,
+      tag,
+      description,
+      exchangeRates,
+      id,
+    } = this.state;
+
     this.setState({
       expenses: [
         ...expenses,
@@ -42,15 +61,22 @@ class Form extends React.Component {
           currency,
           method,
           tag,
+          exchangeRates,
         },
       ],
-    });
-    id += 1;
+    }, () => { this.sendDispatch(); });
+  }
+
+  // Função para corrigir erro de lint sobre multiplas desconstruções de 'expenses' dentro de uma única função -> desconstruí várias vezes por causa da assincronicidade das funções
+  sendDispatch() {
+    const { saveDispatch } = this.props;
+    const { expenses } = this.state;
+    saveDispatch(expenses);
+    this.setState((previousState) => ({ expense: 0, id: previousState.id + 1 }));
   }
 
   render() {
-    const { saveDispatch } = this.props;
-    const { expenses } = this.state;
+    const { expense } = this.state;
     return (
       <div className="wallet-form">
         <Input
@@ -58,6 +84,7 @@ class Form extends React.Component {
           name="expense"
           title="Despesas:"
           onChange={ this.handleChange }
+          value={ expense }
         />
         <Input
           testid="description-input"
@@ -83,8 +110,8 @@ class Form extends React.Component {
         <button
           type="button"
           onClick={ () => {
-            this.addExpense();
-            saveDispatch(expenses);
+            this.recoverCurrency();
+            // this.addExpense();
           } }
         >
           Adicionar Despesa
@@ -97,10 +124,12 @@ class Form extends React.Component {
 // função feita com base nos códigos de exemplo do course
 const mapDispatchToProps = (dispatch) => ({
   saveDispatch: (state) => dispatch(saveWallet(state)),
+  getCurrency: () => dispatch(fetchCurrency()),
 });
 
 Form.propTypes = {
   saveDispatch: PropTypes.func.isRequired,
+  getCurrency: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Form);
