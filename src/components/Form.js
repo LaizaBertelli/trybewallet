@@ -4,60 +4,92 @@ import PropTypes from 'prop-types';
 import Input from './Input';
 import { saveWallet } from '../actions/index';
 
+const METHODS = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+const TAGS = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+
 class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      expense: '',
-      description: '',
+      expenses: [],
+      expense: 0,
       currency: '',
       method: '',
       tag: '',
+      description: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.addExpense = this.addExpense.bind(this);
   }
 
-  handleChange(event) {
-    const { name, value } = event.target;
-    this.setState({ [name]: value }, () => this.validateInputs());
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  }
+
+  addExpense() {
+    const { expenses, expense, currency, method, tag, description } = this.state;
+    let id = 0;
+    this.setState({
+      expenses: [
+        ...expenses,
+        {
+          id,
+          value: expense,
+          currency,
+          method,
+          tag,
+          description,
+        },
+      ],
+    });
+    id += 1;
   }
 
   render() {
     const { saveDispatch } = this.props;
+    const { expenses } = this.state;
     return (
       <div className="wallet-form">
         <Input
           testid="value-input"
-          type="text"
           name="expense"
           title="Despesas:"
+          onChange={ this.handleChange }
         />
         <Input
           testid="description-input"
-          type="text"
           name="description"
           title="Descrição da empresa:"
+          onChange={ this.handleChange }
         />
         <Input
           testid="currency-input"
-          type="text"
           name="currency"
           title="Moeda:"
+          onChange={ this.handleChange }
         />
-        {/* <Input
+        <Input
           testid="method-input"
-          type="text"
           name="method"
           title="Método de Pagamento:"
-        /> */}
-        {/* <Input
+          options={ METHODS }
+          onChange={ this.handleChange }
+        />
+        <Input
           testid="tag-input"
-          type=""
-        /> */}
+          name="tag"
+          title="Tags:"
+          options={ TAGS }
+          onChange={ this.handleChange }
+        />
         <button
           type="button"
-          onClick={ () => saveDispatch(this.state) }
+          onClick={ () => {
+            this.addExpense();
+            saveDispatch(expenses);
+          } }
         >
           Adicionar Despesa
         </button>
