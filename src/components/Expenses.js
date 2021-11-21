@@ -8,6 +8,7 @@ class Expenses extends React.Component {
 
     this.getTableData = this.getTableData.bind(this);
     this.getCurrencyName = this.getCurrencyName.bind(this);
+    this.convertValue = this.convertValue.bind(this);
   }
 
   // Função para recuperar o nome por extenso da moeda
@@ -30,7 +31,7 @@ class Expenses extends React.Component {
           <td>{ value }</td>
           <td>{ currencyName }</td>
           <td>{ exchangeFixed }</td>
-          <td>{ convertValue(value, ask) }</td>
+          <td>{ this.convertValue(value, ask) }</td>
           <td>Real</td>
         </tr>
       </tbody>
