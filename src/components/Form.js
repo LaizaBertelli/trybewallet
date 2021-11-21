@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Input from './Input';
+import Currency from './Currency';
 import { saveWallet } from '../actions/index';
 
 const METHODS = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
@@ -64,12 +65,7 @@ class Form extends React.Component {
           title="Descrição da empresa:"
           onChange={ this.handleChange }
         />
-        <Input
-          testid="currency-input"
-          name="currency"
-          title="Moeda:"
-          onChange={ this.handleChange }
-        />
+        <Currency onChange={ this.handleChange } />
         <Input
           testid="method-input"
           name="method"
