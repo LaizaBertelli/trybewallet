@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Input from './Input';
 import Currency from './Currency';
 import { saveWallet, fetchCurrency } from '../actions/index';
+import '../styles/form.css';
 
 const METHODS = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const TAGS = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -92,26 +93,28 @@ class Form extends React.Component {
           title="Descrição da empresa:"
           onChange={ this.handleChange }
         />
-        <Currency onChange={ this.handleChange } />
-        <Input
-          testid="method-input"
-          name="method"
-          title="Método de Pagamento:"
-          options={ METHODS }
-          onChange={ this.handleChange }
-        />
-        <Input
-          testid="tag-input"
-          name="tag"
-          title="Tags:"
-          options={ TAGS }
-          onChange={ this.handleChange }
-        />
+        <div className="select-container">
+          <Currency onChange={ this.handleChange } />
+          <Input
+            testid="method-input"
+            name="method"
+            title="Método de Pagamento:"
+            options={ METHODS }
+            onChange={ this.handleChange }
+          />
+          <Input
+            testid="tag-input"
+            name="tag"
+            title="Tags:"
+            options={ TAGS }
+            onChange={ this.handleChange }
+          />
+        </div>
         <button
+          className="submit-wallet"
           type="button"
           onClick={ () => {
             this.recoverCurrency();
-            // this.addExpense();
           } }
         >
           Adicionar Despesa

@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { BiEditAlt } from 'react-icons/bi';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 
 class Expenses extends React.Component {
   constructor() {
@@ -33,6 +35,12 @@ class Expenses extends React.Component {
           <td>{ exchangeFixed }</td>
           <td>{ this.convertValue(value, ask) }</td>
           <td>Real</td>
+          <td>
+            <div className="icons">
+              <BiEditAlt className="delete" />
+              <RiDeleteBin6Line />
+            </div>
+          </td>
         </tr>
       </tbody>
     );

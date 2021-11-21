@@ -1,0 +1,89 @@
+.wallet {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.wallet-form {
+  align-items: center;
+  display: flex;
+  margin: 60px 0 30px 0;
+}
+
+.label-container {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 5px;
+  width: 200px;
+}
+
+select {
+  cursor: pointer;
+  background: white;
+  border: none;
+  border-bottom: 3px solid rgb(80, 170, 118);
+  font-size: 15px;
+  padding: 10px;
+  width: 100%;
+}
+
+span {
+  color: rgb(80, 170, 118);
+  font-size: 14px;
+  padding: 5px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  background-color: rgba(80, 170, 118, 0.7);
+  border: 1px solid rgb(58, 104, 79);
+  padding: 20px;
+}
+
+td {
+  border: 1px solid rgba(2, 37, 2);
+  padding: 10px;
+}
+
+.submit-wallet {
+  background-color: rgb(80, 170, 118);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  font-size: 17px;
+  margin: 10px;
+  width: 120px;
+}
+
+.submit-wallet:hover {
+  background-color: white;
+  border: 3px solid rgb(80, 170, 118);
+  color: rgb(80, 170, 118);
+  padding: 0;
+}
+
+.wallet-inputs {
+  border: none;
+  border-bottom: 3px solid rgb(80, 170, 118);
+  height: 100%;
+  padding-top: 21px;
+}
+
+.select-container {
+  align-items: center;
+  display: flex;
+}
+
+.icons {
+  color: rgb(80, 170, 118);
+  margin-left: 30px;
+}
+
+.delete {
+  margin-right: 20px;
+}

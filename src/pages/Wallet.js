@@ -6,7 +6,7 @@ import Expenses from '../components/Expenses';
 class Wallet extends React.Component {
   render() {
     return (
-      <div>
+      <div className="wallet">
         <Header />
         <Form />
         <Expenses />

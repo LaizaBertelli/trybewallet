@@ -6,8 +6,8 @@ class Input extends React.Component {
     const { testid, name, title, onChange, options, value } = this.props;
     if (name === 'method' || name === 'tag') {
       return (
-        <label htmlFor={ name }>
-          { title }
+        <div className="label-container">
+          <label htmlFor={ name }><span>{ title }</span></label>
           <select data-testid={ testid } id={ name } name={ name } onChange={ onChange }>
             {
               options.map((option, index) => (
@@ -20,20 +20,24 @@ class Input extends React.Component {
               ))
             }
           </select>
-        </label>
+        </div>
       );
     }
     return (
-      <label htmlFor={ name }>
-        { title }
-        <input
-          data-testid={ testid }
-          type="text"
-          name={ name }
-          value={ value }
-          onChange={ onChange }
-        />
-      </label>
+      <div className="label-container">
+        <label htmlFor={ name } className="wallet-label">
+          <span>{ title }</span>
+          <input
+            data-testid={ testid }
+            className="wallet-inputs"
+            type="text"
+            id={ name }
+            name={ name }
+            value={ value }
+            onChange={ onChange }
+          />
+        </label>
+      </div>
     );
   }
 }

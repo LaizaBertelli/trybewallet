@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import '../styles/header.css';
+import { GiWallet } from 'react-icons/gi';
+import { CgProfile } from 'react-icons/cg';
 
 class Header extends React.Component {
   constructor() {
@@ -28,11 +31,17 @@ class Header extends React.Component {
     const { userInfo } = this.props;
     const { email } = userInfo;
     return (
-      <div className="header">
-        <p data-testid="email-field">{ email }</p>
-        <p data-testid="total-field">{ this.getValue() }</p>
-        <p data-testid="header-currency-field">BRL</p>
-      </div>
+      <header className="header">
+        <div className="wallet-infos-header">
+          <span><GiWallet size={ 40 } className="react-icons" /></span>
+          <p data-testid="total-field">{ this.getValue() }</p>
+          <p data-testid="header-currency-field">BRL</p>
+        </div>
+        <div className="email-container">
+          <span><CgProfile size={ 20 } /></span>
+          <p data-testid="email-field">{ email }</p>
+        </div>
+      </header>
     );
   }
 }

@@ -36,29 +36,31 @@ class Currency extends React.Component {
     const { onChange } = this.props;
     const { codes } = this.state;
     return (
-      <label htmlFor="currency">
-        Moeda:
-        <select
-          data-testid="currency-input"
-          name="currency"
-          id="currency"
-          onChange={ onChange }
-        >
-          {
-            codes.map((code) => (
-              code !== 'USDT' && (
-                <option
-                  data-testid={ code }
-                  value={ code }
-                  key={ code }
-                >
-                  { code }
-                </option>
-              )
-            ))
-          }
-        </select>
-      </label>
+      <div className="label-container">
+        <label htmlFor="currency">
+          <span>Moeda:</span>
+          <select
+            data-testid="currency-input"
+            name="currency"
+            id="currency"
+            onChange={ onChange }
+          >
+            {
+              codes.map((code) => (
+                code !== 'USDT' && (
+                  <option
+                    data-testid={ code }
+                    value={ code }
+                    key={ code }
+                  >
+                    { code }
+                  </option>
+                )
+              ))
+            }
+          </select>
+        </label>
+      </div>
     );
   }
 }
