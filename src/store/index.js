@@ -1,11 +1,9 @@
-// Feito com base nos códigos de exemplo do Course
-import { createStore, applyMiddleWare } from 'redux';
-import rootreducer from '../reducers';
+import { applyMiddleware, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 
-const store = createStore(
-  rootreducer,
-  applyMiddleWare(thunk),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
+import rootReducer from '../reducers';
+
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
 export default store;
