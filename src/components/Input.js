@@ -12,6 +12,7 @@ class Input extends React.Component {
             {
               options.map((option, index) => (
                 <option
+                  // Método replace utilizado com base nesse código: https://pt.stackoverflow.com/questions/382479/removendo-todos-os-espa%C3%A7os-de-uma-string-usando-javascript
                   value={ option.replace(/\s/g, '') }
                   key={ index }
                 >
