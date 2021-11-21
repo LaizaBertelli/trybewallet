@@ -37,10 +37,10 @@ class Form extends React.Component {
         {
           id,
           value: expense,
+          description,
           currency,
           method,
           tag,
-          description,
         },
       ],
     });

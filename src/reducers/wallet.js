@@ -1,11 +1,7 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = [
   {
-    expense: '',
-    description: '',
-    currency: '',
-    method: '',
-    tag: '',
+    expenses: [],
   },
 ];
 
