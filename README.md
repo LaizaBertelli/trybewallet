@@ -1,6 +1,9 @@
 # TrybeWallet
 
-<img style="max-width: 400px;" src="./preview/preview-print.png">
+<div>
+  <img style="width: 75%;" src="./preview/login.gif">
+  <img style="width: 75%;" src="./preview/wallet.gif">
+</div>
 
 TrybeWallet é um projeto que desenvolvi durante o módulo de Front-end na Trybe. O principal objetivo era colocar em prática os, recem aprendidos, conceitos de Redux.
 
